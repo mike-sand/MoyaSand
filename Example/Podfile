@@ -2,6 +2,7 @@ use_frameworks!
 
 target 'MoyaSand_Example' do
   pod 'MoyaSand', :path => '../'
+  pod 'Moya' #, :git => 'https://github.com/Moya/Moya'
 
   target 'MoyaSand_Tests' do
     inherit! :search_paths

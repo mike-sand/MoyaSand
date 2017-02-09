@@ -1,0 +1,22 @@
+{
+  "name": "MoyaSand",
+  "version": "0.1.0",
+  "summary": "A short description of MoyaSand.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/michaelsand/MoyaSand",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "michaelsand": "git@mikesand.com"
+  },
+  "source": {
+    "git": "https://github.com/michaelsand/MoyaSand.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "MoyaSand/Classes/**/*"
+}

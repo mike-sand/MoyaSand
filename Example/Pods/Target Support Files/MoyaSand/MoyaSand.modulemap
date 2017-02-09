@@ -1,0 +1,6 @@
+framework module MoyaSand {
+  umbrella header "MoyaSand-umbrella.h"
+
+  export *
+  module * { export * }
+}

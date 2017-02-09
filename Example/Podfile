@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'MoyaSand_Example' do
+  pod 'MoyaSand', :path => '../'
+
+  target 'MoyaSand_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end

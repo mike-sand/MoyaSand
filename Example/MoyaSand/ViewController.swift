@@ -1,5 +1,6 @@
 import UIKit
 import Moya
+import MoyaSand
 
 class ViewController: UITableViewController {
     var progressView = UIView()
@@ -25,41 +26,33 @@ class ViewController: UITableViewController {
     // MARK: - API Stuff
 
     func downloadRepositories(_ username: String) {
-         GitHubProvider.request(.userRepositories(username)) { result in
+        
+        GitHubProvider.typeNSArray.request(.userRepositories(username)) { (result) in
             switch result {
-            case let .success(response):
-                do {
-                    if let json = try response.mapJSON() as? NSArray {
-                        // Presumably, you'd parse the JSON into a model object. This is just a demo, so we'll keep it as-is.
-                        self.repos = json
-                    } else {
-                        self.showAlert("GitHub Fetch", message: "Unable to fetch from GitHub")
-                    }
-                } catch {
-                    self.showAlert("GitHub Fetch", message: "Unable to fetch from GitHub")
-                }
+            case let .success(repos):
+                self.repos = repos
                 self.tableView.reloadData()
             case let .failure(error):
-                guard let error = error as? CustomStringConvertible else {
-                    break
-                }
-                self.showAlert("GitHub Fetch", message: error.description)
+                let printableError = error as? CustomStringConvertible
+                let errorMessage = printableError?.description ?? "Unable to fetch from GitHub"
+                self.showAlert("GitHub Fetch", message: errorMessage)
             }
         }
     }
 
     func downloadZen() {
-         GitHubProvider.request(.zen) { result in
-            var message = "Couldn't access API"
-            if case let .success(response) = result {
-                let jsonString = try? response.mapString()
-                message = jsonString ?? message
+        GitHubProvider.typeString.request(.zen) { (result) in
+            switch result {
+            case let .success(message):
+                self.showAlert("Zen", message: message)
+            case let .failure(error):
+                let error = error as? CustomStringConvertible
+                let errorMessage = error?.description ?? "Couldn't access API"
+                self.showAlert("Zen", message: errorMessage)
             }
-    
-            self.showAlert("Zen", message: message)
         }
     }
-    
+
     func uploadGiphy() {
         let data = animatedBirdData()
          GiphyProvider.request(.upload(gif: data),

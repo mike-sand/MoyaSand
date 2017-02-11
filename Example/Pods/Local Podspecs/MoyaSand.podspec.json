@@ -18,5 +18,10 @@
   "platforms": {
     "ios": "8.0"
   },
-  "source_files": "MoyaSand/Classes/**/*"
+  "source_files": "MoyaSand/Classes/**/*",
+  "dependencies": {
+    "Moya": [
+
+    ]
+  }
 }

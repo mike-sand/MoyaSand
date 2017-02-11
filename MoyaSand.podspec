@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'MoyaSand'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of MoyaSand.'
+  s.summary          = 'Moya extensions for moving parsing logic out of completion blocks.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,15 +18,15 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+MoyaSand works with the Moya networking abstraction framework to encapsulate the final steps and do parsing of the response before invoking completion blocks. This can keep the call site decluttered, as well as let the TargetType always specify how to parse calls to its endpoint.
                        DESC
 
-  s.homepage         = 'https://github.com/michaelsand/MoyaSand'
+  s.homepage         = 'https://github.com/mike-sand/MoyaSand'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'michaelsand' => 'git@mikesand.com' }
-  s.source           = { :git => 'https://github.com/michaelsand/MoyaSand.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.author           = { 'mike-sand' => 'git@mikesand.com' }
+  s.source           = { :git => 'https://github.com/mike-sand/MoyaSand.git', :tag => s.version.to_s }
+  # s.social_media_url = 'https://twitter.com/_mikesand'
 
   s.ios.deployment_target = '8.0'
 

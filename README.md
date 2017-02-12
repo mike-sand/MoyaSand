@@ -17,15 +17,16 @@ Two techniques are included:
 var parser : (Response) throws -> Any { get }
 ```
 
-The return is a function that takes a `Response` returns a type or throws an error. 
+The return is a function that takes a `Response` and returns a type or throws an error. 
 
 The function returns `Any` to cross the Swift strongly-typed barrier, but the parser can and should return the concrete type it expects. 
+
+### Methods as Closures  
 
 The function can be created with closure syntax but can be a function in another class or struct. To pass a function with the signature `(Response) throws -> [Type]` simply pass the class and function without the `()` that would invoke it:
 
 ```swift
 extension SomeTarget : TargetTypeWithParser {
-
     var parser : (Response) throws -> Any {
         return Parser.singleString
     }
@@ -41,12 +42,17 @@ struct Parser {
 }
 ```
 
-To preserve tyoe safety the MoyaProvider must be wrapped. This is done by creating a `MoyaProviderWrapped` for each type that can be returned. This is done in a single extension that creates the wrapper as needed with a one-line function for each type: 
+### MoyaProviderTyped
+
+To preserve type safety the `MoyaProvider` must be wrapped. This is done by creating a `MoyaProviderTyped` for each type that can be returned. This can be done in an extension that creates the wrapper as needed with a one-line function for each type: 
 
 ```swift 
-public extension MoyaProvider where Target : TargetTypeWithParser {
-
+extension MoyaProvider where Target : TargetTypeWithParser {
     var typeNSArray : MoyaProviderTyped<NSArray, Target> {
+        return MoyaProviderTyped.create(with: self)
+    }
+
+    var typeModel : MoyaProviderTyped<Model, Target> {
         return MoyaProviderTyped.create(with: self)
     }
 }
@@ -66,13 +72,13 @@ Then to invoke the whole thing on your provider:
     }
 ```
 
-If the provider type does not match the type returned as Any from the parser, a jsonParsing error will be thrown.   
+If the provider type does not match the type returned as `Any` from the parser, a jsonParsing error will be thrown.   
 
 ## MoyaProvider+GenericRequest 
 
 Eliminates response handling from completion blocks by passing a parser closure. 
 
-Adds a generic method to MoyaProvider that takes a parser that converts a `Response` to `T` and then passes that `T` to a completion block as a Result.  
+This extension adds a generic method to MoyaProvider that takes a parser that converts a `Response` to `T` and then passes that `T` to a completion block as a Result.  
 
 `request<T>(_ target: Target, parser: (Response) throws -> T, completion: (Result<T, MoyaError>) -> Void) -> Cancellable` 
 

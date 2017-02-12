@@ -1,19 +1,25 @@
 # MoyaSand
 
-MoyaSand is an extension to hte [Moya](https://github.com/moya/moya) network abstraction layer written in Swift. MoyaSand allows for fully encapsulated handling of the network layer.
+MoyaSand is an extension to the [Moya](https://github.com/moya/moya) network abstraction layer written in Swift. The extension allows for fully encapsulated handling of the network layer.  
 
-MoyaSand does *not* provide a method of JSON parsing. The goal of MoyaSand is to encapsulate the parsing by moving it away from the call site. 
+Note: MoyaSand does *not* provide a method of JSON parsing. The goal of MoyaSand is to encapsulate the parsing by moving it away from the call site. The extension is not for use with ReactiveSwift and RxCocoa at this time.
 
 Two techniques are included:
 
-* `TargetTypeWithParser` is more complete, with a protocol that targets adopt and wrapper for MoyaProvider. It lets targets specify parsing method and removes it entirely from the call site. 
+* `TargetTypeWithParser` is a protocol that targets adopt and a wrapper for MoyaProvider. It lets targets specify the parsing method. 
 * `MoyaProvider+GenericRequest` moves the paring logic to a closure parameter but still requires the call site to specify what parsing to use. 
 
 ## TargetTypeWithParser
 
-TargetTypeWithParser is a protocol with a single property requirement, `var parser : (Response) throws -> Any { get }`. The return is a function that takes a `Response` returns a type or throws an error. 
+`TargetTypeWithParser` is a protocol with a single property requirement 
 
-Note: The function returns `Any` to cross the Swift strongly-typed barrier, but the parser can and should return the concrete type it expects. 
+```swift
+var parser : (Response) throws -> Any { get }
+```
+
+The return is a function that takes a `Response` returns a type or throws an error. 
+
+The function returns `Any` to cross the Swift strongly-typed barrier, but the parser can and should return the concrete type it expects. 
 
 The function can be created with closure syntax but can be a function in another class or struct. To pass a function with the signature `(Response) throws -> [Type]` simply pass the class and function without the `()` that would invoke it:
 

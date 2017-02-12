@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'MoyaSand'
-  s.version          = '0.0.1'
+  s.version          = '0.0.2'
   s.summary          = 'Moya extensions for moving parsing logic out of completion blocks.'
 
 # This description is used to generate tags and improve search results.
